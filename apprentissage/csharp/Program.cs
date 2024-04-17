@@ -23,7 +23,6 @@ class Program
             number = Convert.ToInt32(Console.ReadLine());
         }
 
-        // Message de fin
         Console.WriteLine("vous avez trouvez le nombre " + number+" en " + count+" tour.");
     }
 }
