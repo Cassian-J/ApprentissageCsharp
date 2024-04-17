@@ -1,59 +1,59 @@
 class Program
 {
-    static char[,] grille = new char[3, 3];
+    static char[,] grid = new char[3, 3];
 
     static void Main(string[] args)
     {
-        InitialiserGrille();
+        InitializeGrid();
 
         while (true)
         {
-            AfficherGrille();
+            DisplayGrid();
 
-            JouerCoup('X');
+            PlayMove('X');
 
-            if (VerifierGagnant('X'))
+            if (CheckWinner('X'))
             {
-                Console.WriteLine("Joueur X a gagné !");
+                Console.WriteLine("Player X wins!");
                 break;
             }
 
-            if (EstMatchNul())
+            if (IsDraw())
             {
-                Console.WriteLine("Match nul !");
+                Console.WriteLine("Draw!");
                 break;
             }
 
-            AfficherGrille();
+            DisplayGrid();
 
-            JouerCoup('O');
+            PlayMove('O');
 
-            if (VerifierGagnant('O'))
+            if (CheckWinner('O'))
             {
-                Console.WriteLine("Joueur O a gagné !");
+                Console.WriteLine("Player O wins!");
                 break;
             }
 
-            if (EstMatchNul())
+            if (IsDraw())
             {
-                Console.WriteLine("Match nul !");
+                Console.WriteLine("Draw!");
                 break;
             }
         }
     }
 
-    static void InitialiserGrille()
+    static void InitializeGrid()
     {
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 3; j++)
             {
-                grille[i, j] = ' ';
+                grid[i, j] = ' ';
             }
         }
     }
 
-    static void AfficherGrille()
+    static void DisplayGrid()
     {
         Console.WriteLine("  0 1 2");
         for (int i = 0; i < 3; i++)
@@ -61,71 +61,71 @@ class Program
             Console.Write(i + " ");
             for (int j = 0; j < 3; j++)
             {
-                Console.Write(grille[i, j] + " ");
+                Console.Write(grid[i, j] + " ");
             }
             Console.WriteLine();
         }
     }
 
-    static void JouerCoup(char joueur)
+    static void PlayMove(char player)
     {
         while (true)
         {
-            Console.WriteLine("Joueur " + joueur + ", entrez les coordonnées (ligne colonne) de votre coup : ");
+            Console.WriteLine("Player " + player + ", enter the coordinates (row column) of your move: ");
             string[] input = Console.ReadLine().Split(' ');
-            int ligne = int.Parse(input[0]);
-            int colonne = int.Parse(input[1]);
+            int row = int.Parse(input[0]);
+            int column = int.Parse(input[1]);
 
-            if (EstCoupValide(ligne, colonne))
+            if (IsValidMove(row, column))
             {
-                grille[ligne, colonne] = joueur;
+                grid[row, column] = player;
                 break;
             }
             else
             {
-                Console.WriteLine("Coup invalide. Veuillez réessayer.");
+                Console.WriteLine("Invalid move. Please try again.");
             }
         }
     }
 
-    static bool EstCoupValide(int ligne, int colonne)
+    static bool IsValidMove(int row, int column)
     {
-        if (ligne < 0 || ligne >= 3 || colonne < 0 || colonne >= 3)
+        if (row < 0 || row >= 3 || column < 0 || column >= 3)
         {
             return false;
         }
-        if (grille[ligne, colonne] != ' ')
+        if (grid[row, column] != ' ')
         {
             return false;
         }
         return true;
     }
 
-    static bool VerifierGagnant(char joueur)
+    static bool CheckWinner(char player)
     {
         for (int i = 0; i < 3; i++)
         {
-            if (grille[i, 0] == joueur && grille[i, 1] == joueur && grille[i, 2] == joueur)
+            if (grid[i, 0] == player && grid[i, 1] == player && grid[i, 2] == player)
                 return true;
-            if (grille[0, i] == joueur && grille[1, i] == joueur && grille[2, i] == joueur)
+            if (grid[0, i] == player && grid[1, i] == player && grid[2, i] == player)
                 return true;
         }
 
-        if (grille[0, 0] == joueur && grille[1, 1] == joueur && grille[2, 2] == joueur)
+        if (grid[0, 0] == player && grid[1, 1] == player && grid[2, 2] == player)
             return true;
-        if (grille[0, 2] == joueur && grille[1, 1] == joueur && grille[2, 0] == joueur)
+        if (grid[0, 2] == player && grid[1, 1] == player && grid[2, 0] == player)
             return true;
 
         return false;
     }
 
-    static bool EstMatchNul()
+    static bool IsDraw()
     {
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 3; j++)
             {
-                if (grille[i, j] == ' ')
+                if (grid[i, j] == ' ')
                 {
                     return false;
                 }
